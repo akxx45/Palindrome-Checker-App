@@ -1,8 +1,14 @@
+import java.util.Scanner;
+
 public class PalindromeChecker {
 
     public static void main(String[] args) {
 
-        String str = "madam";
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a string: ");
+        String str = sc.nextLine();
+
         String reversed = "";
 
         for (int i = str.length() - 1; i >= 0; i--) {
