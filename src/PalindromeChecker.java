@@ -2,16 +2,6 @@ import java.util.Scanner;
 
 public class PalindromeChecker {
 
-    public static boolean isPalindrome(String str, int start, int end) {
-        if (start >= end) {
-            return true;
-        }
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-        return isPalindrome(str, start + 1, end - 1);
-    }
-
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -19,9 +9,22 @@ public class PalindromeChecker {
         System.out.print("Enter a string: ");
         String str = sc.nextLine();
 
-        boolean result = isPalindrome(str, 0, str.length() - 1);
+        String normalized = str.replaceAll("\\s+", "").toLowerCase();
 
-        if (result) {
+        int start = 0;
+        int end = normalized.length() - 1;
+        boolean isPalindrome = true;
+
+        while (start < end) {
+            if (normalized.charAt(start) != normalized.charAt(end)) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
+        }
+
+        if (isPalindrome) {
             System.out.println("The string \"" + str + "\" is a Palindrome");
         } else {
             System.out.println("The string \"" + str + "\" is not a Palindrome");
