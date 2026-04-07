@@ -1,8 +1,16 @@
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.LinkedList;
 
 public class PalindromeChecker {
+
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -11,19 +19,46 @@ public class PalindromeChecker {
         System.out.print("Enter a string: ");
         String str = sc.nextLine();
 
-        Deque<Character> deque = new LinkedList<>();
+        Node head = null, tail = null;
 
         for (int i = 0; i < str.length(); i++) {
-            deque.addLast(str.charAt(i));
+            Node newNode = new Node(str.charAt(i));
+            if (head == null) {
+                head = tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
         }
+
+        Node slow = head, fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        Node prev = null, curr = slow, next;
+
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        Node first = head;
+        Node second = prev;
 
         boolean isPalindrome = true;
 
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
+        while (second != null) {
+            if (first.data != second.data) {
                 isPalindrome = false;
                 break;
             }
+            first = first.next;
+            second = second.next;
         }
 
         if (isPalindrome) {
